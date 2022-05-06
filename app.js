@@ -6,18 +6,17 @@ const host = "localhost";
 
 const pug = require("pug");
 
-// app.use("/templates", express.static(__dirname + "/templates"));
-
 app.get("/", (req, res) => {
   const compiledFunction = pug.compileFile("templates/index.pug");
   const resp = compiledFunction();
   res.send(resp);
 });
 
-app.get("/user/quest:page", (req, res) => {
+app.get("/quest:page", (req, res) => {
   let page = parseInt(req.params.page);
-  page = page <= 5 && page > 0 ? page : 1;
-  let resp = pug.compileFile("templates/quest_" + page + ".pug");
+  page = page <= 5 && page >= 1 ? page : 1;
+  const compiledFunction = pug.compileFile("templates/quest_" + page + ".pug");
+  const resp = compiledFunction();
   res.send(resp);
 });
 
